@@ -1,0 +1,3 @@
+# @package _global_
+checkpoints_dir: ${storage_dir:}/checkpoints/${experiment_name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+csv_logger_save_dir: ${storage_dir:}/experiments/${experiment_name}/${now:%Y-%m-%d}/${now:%H-%M-%S}

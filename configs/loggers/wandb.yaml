@@ -1,0 +1,2 @@
+save_dir: ${storage_dir:}/experiments
+project: ${wandb_project_name:}

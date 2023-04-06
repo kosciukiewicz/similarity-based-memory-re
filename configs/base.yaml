@@ -1,0 +1,7 @@
+# @package _global_
+defaults:
+  - /artifacts_tracking: grouped
+  - /hydra_logging: default
+  - _self_
+
+run_dir: ${storage_dir:}/runs/${experiment_name}/${now:%Y-%m-%d}/${now:%H-%M-%S}

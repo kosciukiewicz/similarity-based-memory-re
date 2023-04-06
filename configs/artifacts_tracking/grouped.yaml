@@ -1,0 +1,5 @@
+# @package _global_
+predictions_dir: ${run_dir}/predictions/.
+attentions_dir: ${run_dir}/attentions/.
+checkpoints_dir: ${run_dir}/checkpoints/.
+csv_logger_save_dir: ${run_dir}/.

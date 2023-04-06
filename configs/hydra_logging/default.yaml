@@ -1,0 +1,10 @@
+# @package _global_
+defaults:
+  - _self_
+  - override /hydra/hydra_logging: colorlog
+  - override /hydra/job_logging: disabled
+
+hydra:
+  run:
+    dir: ${run_dir}
+  output_subdir: run_config

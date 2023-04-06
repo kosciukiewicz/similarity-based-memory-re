@@ -1,0 +1,32 @@
+# @package _global_
+defaults:
+  - ./base
+  - /loggers@loggers.wandb: wandb
+  - /loggers@loggers.csv: csv
+  - _self_
+  - override /artifacts_tracking: grouped
+
+seed: 112
+monitor: val/rel_nec/f1_micro
+
+runner:
+  _target_: memory_re.models.memory_re.runner.train
+
+callbacks:
+  - callback_type: MemoryAttentionTrackingCallback
+    stage: test
+    memory_level: tokens
+    memory_type: entities
+    save_dir: ${run_dir}/attentions/tokens/entities
+    all_types: True
+    document_ids:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10

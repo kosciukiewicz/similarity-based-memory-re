@@ -1,0 +1,14 @@
+# @package _global_
+defaults:
+  - ../base
+  - _self_
+
+dataset_name: ReDocREDRelationExtractionDataset
+experiment_name: memory_re/re_doc_red
+
+data:
+  neg_mention_count: 200
+  neg_coref_count: 200
+  neg_relation_count: 200
+  max_span_size: 10
+  lowercase: false

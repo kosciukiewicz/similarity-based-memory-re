@@ -1,0 +1,6 @@
+[submodule "submodules/edge_oriented_graph"]
+	path = submodules/edge_oriented_graph
+	url = git@github.com:fenchri/edge-oriented-graph.git
+[submodule "submodules/jerex"]
+	path = submodules/jerex
+	url = git@github.com:lavis-nlp/jerex.git

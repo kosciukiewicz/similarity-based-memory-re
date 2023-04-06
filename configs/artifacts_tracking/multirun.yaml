@@ -1,0 +1,15 @@
+# @package _global_
+predictions_dir: ${run_dir}/${hydra:job.override_dirname}/predictions/.
+attentions_dir: ${run_dir}/${hydra:job.override_dirname}/attentions/.
+checkpoints_dir: ${run_dir}/${hydra:job.override_dirname}/checkpoints/.
+csv_logger_save_dir: ${run_dir}/${hydra:job.override_dirname}/.
+
+hydra:
+  sweep:
+    dir: ${run_dir}
+    subdir: ${hydra:job.override_dirname}
+  job:
+    config:
+      override_dirname:
+        exclude_keys:
+          - artifacts_tracking

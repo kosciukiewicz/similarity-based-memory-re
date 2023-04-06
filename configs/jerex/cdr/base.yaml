@@ -1,0 +1,32 @@
+# @package _global_
+defaults:
+  - ../base
+  - _self_
+
+dataset_name: CDRFinalRelationExtractionDataset
+pretrained_tokenizer: huggingface/allenai/scibert_scivocab_cased
+pretrained_model: huggingface/allenai/scibert_scivocab_cased
+experiment_name: memory_re/cdr
+
+data:
+  neg_mention_count: 200
+  neg_coref_count: 200
+  neg_relation_count: 200
+  max_span_size: 10
+  lowercase: false
+
+model:
+  meta_embedding_size: 75
+  size_embeddings_count: 60
+  position_embeddings_count: 1000
+  memory:
+    use_entity_memory: true
+    use_relation_memory: true
+    entity_memory_size: null
+    relation_memory_size: null
+    memory_read_grad: true
+    warmup_proportion: 0.5
+    memory_read_modules: null
+    memory_flow_modules:
+    - tokens
+    - mentions

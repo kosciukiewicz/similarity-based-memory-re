@@ -1,0 +1,36 @@
+# @package _global_
+defaults:
+  - ./base
+  - _self_
+
+seed: 112
+
+checkpoint_path: ${storage_dir:}/models/memory_re/cdr.ckpt
+runner:
+  _target_: memory_re.models.memory_re.runner.test
+
+callbacks:
+  - callback_type: RelationExtractionPredictionSaver
+    stage: test
+    destination_filepath: ${predictions_dir}/test.html
+    log_predictions: false
+  - callback_type: MemoryAttentionTrackingCallback
+    stage: test
+    memory_level: tokens
+    memory_type: relations
+    save_dir: ${run_dir}/attentions/tokens/relations
+    all_types: True
+    document_ids:
+      - 1
+      - 2
+      - 3
+  - callback_type: MemoryAttentionTrackingCallback
+    stage: test
+    memory_level: tokens
+    memory_type: entities
+    save_dir: ${run_dir}/attentions/tokens/entities
+    all_types: True
+    document_ids:
+      - 1
+      - 2
+      - 3

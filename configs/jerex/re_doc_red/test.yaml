@@ -1,0 +1,10 @@
+# @package _global_
+defaults:
+  - ./base
+  - _self_
+
+seed: 112
+
+checkpoint_path: ${storage_dir:}/models/jerex/re_doc_red.ckpt
+runner:
+  _target_: memory_re.models.jerex.runner.test

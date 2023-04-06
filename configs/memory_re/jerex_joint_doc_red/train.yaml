@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - ./base
+  - /loggers@loggers.wandb: wandb
+  - /loggers@loggers.csv: csv
+  - _self_
+  - override /artifacts_tracking: multirun
+
+seed: 112
+monitor: val/rel_nec/f1_micro
+
+runner:
+  _target_: memory_re.models.memory_re.runner.train

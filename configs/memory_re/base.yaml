@@ -1,0 +1,97 @@
+# @package _global_
+defaults:
+  - ../base
+  - _self_
+  - override /artifacts_tracking: grouped
+
+pretrained_tokenizer: huggingface/bert-base-cased
+pretrained_model: huggingface/bert-base-cased
+experiment_name: memory_re
+
+model:
+  model_type: multi_instance
+  mention_threshold: 0.85
+  coref_threshold: 0.85
+  rel_threshold: 0.6
+  prop_drop: 0.1
+  max_spans_train: 200
+  max_rel_pairs_train: 50
+  max_coref_pairs_train: ~
+  max_spans_inference: 70
+  max_rel_pairs_inference: 5
+  max_coref_pairs_inference: 200
+  meta_embedding_size: 25
+  size_embeddings_count: 30
+  position_embeddings_count: 700
+  coref_resolution_type: 'Classification'
+  memory:
+    reading_module: 'Bilinear'
+    use_entity_memory: True
+    use_relation_memory: True
+    entity_memory_size: ~
+    relation_memory_size: ~
+    memory_read_grad: True
+    warmup_proportion: 0.4
+    memory_read_modules: ~
+    memory_flow_modules:
+      - tokens
+      - mentions
+
+loss:
+  type: 'JerexJointLoss'
+  coref:
+    type: 'BCEWithLogitsLoss'
+  entity:
+    type: 'CrossEntropyLoss'
+  relation:
+    type: 'BCEWithLogitsLoss'
+  weights:
+    mention: 1.0
+    coref: 1.0
+    entity: 0.25
+    relation: 1.0
+
+optimizer:
+  learning_rate: 0.00005
+  weight_decay: 0.01
+  warmup_proportion: 0.1
+  scheduler: WarmupLinear
+
+trainer:
+  coref_training_samples: Pairs
+  max_epochs: 20
+  train_batch_size: 2
+  val_batch_size: 1
+  num_workers: 4
+  gradient_clip_val: 1.0
+  gpus: 1
+  final_test_evaluation: true
+  flush_logs_every_n_steps: 10
+  log_every_n_steps: 10
+
+saver:
+  monitor: "val/rel_nec/f1_micro"
+  filename: "{epoch:02d}-{val/rel_nec/f1_micro:.4f}"
+  save_top_k: 1
+  mode: "max"
+  save_last: false
+  checkpoints_dir: ${checkpoints_dir}
+
+best_metric_monitor:
+  name: ${monitor}
+  logging_prefix: best_
+  additional_metrics:
+    - val/rel/f1_micro
+    - val/coref/f1_micro
+    - val/entity/f1_micro
+    - val/mention/f1_micro
+
+callbacks:
+  - callback_type: RelationExtractionPredictionSaver
+    stage: val
+    destination_filepath: ${predictions_dir}/val.html
+    log_predictions: false
+  - callback_type: RelationExtractionPredictionSaver
+    stage: test
+    destination_filepath: ${predictions_dir}/test.html
+    log_predictions: false

@@ -1,0 +1,27 @@
+[flake8]
+max-line-length = 100
+max-complexity = 10
+ignore =
+    # Not flexible enough, we're using B950 instead.
+    E501,
+
+    # Disabled for Black compatibility.
+    W503,
+    W504
+
+    # Disabled to not change loads of old reused code
+    C408
+
+
+extend-ignore = E203
+select = B, C, E, F, I, W, B950
+exclude =
+    .git,
+    .tox,
+    .venv,
+    __pycache__,
+    old,
+    build,
+    dist,
+    submodules,
+    storage,

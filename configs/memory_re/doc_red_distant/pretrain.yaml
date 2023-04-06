@@ -1,0 +1,43 @@
+# @package _global_
+defaults:
+  - ../base
+  - /loggers@loggers.wandb: wandb
+  - /loggers@loggers.csv: csv
+  - _self_
+
+seed: 112
+experiment_name: memory_re/doc_red_distant
+
+runner:
+  _target_: memory_re.models.memory_re.runner.train
+
+data:
+  neg_mention_count: 200
+  neg_coref_count: 200
+  neg_relation_count: 200
+  max_span_size: 10
+  lowercase: false
+
+dataset_name: DistantDocREDRelationExtractionDataset
+
+model:
+  model_type: multi_instance
+  meta_embedding_size: 45
+  size_embeddings_count: 35
+  position_embeddings_count: 750
+  memory:
+    use_entity_memory: False
+    use_relation_memory: False
+    entity_memory_size: 768
+    relation_memory_size: 768
+    memory_read_grad: False
+    warmup_proportion: 1.0
+    memory_read_modules: ~
+    memory_flow_modules:
+      - tokens
+      - mentions
+
+trainer:
+  max_epochs: 1
+
+saved_pretrained_model_name: memory_re_multi_instance_distant_doc_red
